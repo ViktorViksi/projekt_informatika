@@ -1,6 +1,6 @@
 import pygame
 
-class Košarica:
+class Pirate:
     def __init__(self, image):
         screen = pygame.display.set_mode((600, 750))
         self.screen = screen
