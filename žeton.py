@@ -2,7 +2,7 @@ import pygame
 import random
 from pygame.sprite import Sprite
 
-class Jaje(Sprite):
+class Coin(Sprite):
     def __init__(self, speed, image):
         super().__init__()
         screen = pygame.display.set_mode((600, 750))
