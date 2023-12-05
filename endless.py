@@ -98,33 +98,37 @@ def drop_novcici():
         novi_novcic = Novcic()
         objekti.add(novi_novcic)
 
-    if score>=25:
+    if score>=10:
         if len(objekti) == 1:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 300:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
-    if score>=50:
+    if score>=20:
         for objekt in objekti.sprites():
             objekt.brzina_dropa=1.5
     
-    if score>=75:
+    if score>=30:
         if len(objekti) == 2:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 550:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
     
-    if score>=100:
+    if score>=40:
         for objekt in objekti.sprites():
             objekt.brzina_dropa=2
         
-    if score>=150:
+    if score>=50:
         if len(objekti) == 3:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 450:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
+
+    if score>=60:
+        for objekt in objekti.sprites():
+            objekt.brzina_dropa=3
 
 
     
