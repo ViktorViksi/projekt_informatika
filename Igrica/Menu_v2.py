@@ -33,14 +33,141 @@ class Gumb: #Klasa koja omogućuje bolju verziju gumba
         else:
             self.text = self.font.render(self.text_input, True, self.base_color)
 
+class Scroll():
+    def __init__(self, image_line, pos_line, image_button, pos_button):
+        self.image_line = image_line
+        self.x_pos_line = pos_line[0]
+        self.y_pos_line = pos_line[1]
+        self.image_button = image_button
+        self.x_pos_button = pos_button[0]
+        self.y_pos_button = pos_button[1]
+        self.rect_line = self.image_line.get_rect(midleft = (self.x_pos_line, self.y_pos_line))
+        self.rect_button = self.image_button.get_rect(center = (self.x_pos_button, self.y_pos_button))
+        
+
+
+    def update(self,screen):
+        #self.image_line = pygame.transform.rotozoom(self.image_line,0,2)
+        screen.blit(self.image_line, self.rect_line)
+        #screen.blit(self.image_button, self.rect_button)
+
+    def checkForInput1(self,position):
+        if position[0] in range(self.rect_line.left, self.rect_line.right) and position[1] in range(self.rect_line.top, self.rect_line.bottom):
+            return True
+        return False
+
+
+    def changeButtonPosition(self,position, screen, zvuk):
+        self.jump_sound  = pygame.mixer.Sound("Audio/S.mp3")
+        self.jump_sound.set_volume(1)
+        self.x_pos_button = int(position[0])
+        self.rect_button = self.image_button.get_rect(center = (self.x_pos_button, self.y_pos_button))
+        screen.blit(self.image_button, self.rect_button)
+        if pygame.mouse.get_pressed()[0]:
+            print(position)
+            #self.jump_sound.play()
+            return True
+
+
+            
+            
+            
+        
+  
+
+
+
 #Još moram nadodati ulogiranje kao prvi pop up
 
 pygame.init()
 screen = pygame.display.set_mode((600, 750))
-pygame.display.set_caption("Menu")
+
+pygame.display.set_caption("Login")
 menu_surface = pygame.image.load("Slike/Pozadina_menu.png").convert()
 test_font = pygame.font.Font(None, 50) #Moram pronaći neki dobar Font/ napraviti
+
+
+
 #S ostalima se dogovoriti za Logo
+zvuk = 1
+bg_music = pygame.mixer.Sound("Audio/He's a Pirate.mp3")
+bg_music.set_volume(zvuk)
+bg_music.play(loops= -1)
+
+def login():
+    user_text = ""
+
+    input_rect = pygame.Rect(145,300,310,45)
+    color_active = pygame.Color("lightskyblue3")  #može i rgb
+    color_passive = pygame.Color("gray15")
+    color = color_passive
+
+    active = False
+
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_rect.collidepoint(event.pos):
+                    active = True
+                else:
+                    active = False
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_text =  user_text[0:-1]
+                    else:
+                        if len(user_text) <= 10:
+                            user_text += event.unicode
+                        
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if LOGIN_BACK.checkForInput(LOGIN_MOUSE_POS):
+                        print(user_text)
+                        with open("login_podaci.txt",encoding="utf-8") as datoteka:
+                            podaci = datoteka.readlines()
+                            if len(podaci) == 0:
+                                podaci.append(f"{user_text}")
+                            else:
+                                podaci.append(f"\n{user_text}")
+                            podaci_text = "".join(podaci)
+                        print(podaci)
+                        with open("login_podaci.txt","wt") as datoteka:
+                            datoteka.write(podaci_text)
+                        main_menu()
+                        
+
+
+
+        screen.fill("White")
+
+        LOGIN_MOUSE_POS = pygame.mouse.get_pos()
+
+
+        LOGIN_BACK = Gumb(pygame.image.load("Slike/Pozadina_gumb7.png").convert(), (300, 400),"Prijavi se", test_font, "Black", "Gray")
+
+        LOGIN_BACK.changeColor(LOGIN_MOUSE_POS)
+        LOGIN_BACK.update(screen)    
+
+
+
+        if active:
+            color = color_active
+        else:
+            color = color_passive
+        pygame.draw.rect(screen,color,input_rect, 2)
+
+        text_srurface = test_font.render(user_text,True, "Green")
+        
+        screen.blit(text_srurface, (input_rect.x +5,input_rect.y +5))
+
+
+        pygame.display.update()
+
 
 def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaciju i uskladiti dizajn s njom.
     pygame.display.set_caption("Menu")
@@ -111,20 +238,37 @@ def play(): #Ovdje vi nadodajete svoj dio za sami aspekt igrice. Tu se odvija ra
         pygame.display.update()
 
 
+
 def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objašnjenje za kontrole/radnju
     while True:
+        global zvuk 
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
-
         screen.fill("Black")
 
         opcije_tekst = test_font.render("Ovdje su opcije",False, "White")
         opcije_rect = opcije_tekst.get_rect(center = (300, 300))
         screen.blit(opcije_tekst, opcije_rect)
 
+        pomicanje = 1
+
         OPTIONS_BACK = Gumb(pygame.image.load("Slike/Pozadina_gumb5.png").convert(), (300, 500), "Vrati se", test_font, "White", "Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(screen)
+
+
+        #"(self, image_line, pos_line, image_button, pos_button)"
+        OPTIONS_SOUND = Scroll(pygame.image.load("Slike/Scol_linija.png").convert(), (200, 100), pygame.image.load("Slike/Scrol_gumb.png").convert(), (200, 100))
+        
+        OPTIONS_SOUND.update(screen)
+
+        if OPTIONS_SOUND.checkForInput1(OPTIONS_MOUSE_POS):  
+            if OPTIONS_SOUND.changeButtonPosition(OPTIONS_MOUSE_POS, screen, zvuk):
+                zvuk = (OPTIONS_MOUSE_POS[0]- 200)/150 #Promijeni kad postaviš na drugo mjesto
+                print(zvuk)
+                bg_music.set_volume(zvuk)
+
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -133,6 +277,8 @@ def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objaš
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
+
+
         pygame.display.update()
 
 
@@ -153,6 +299,7 @@ def achivment():
         ACHIVMENT_BACK.changeColor(ACHIVMENT_MOUSE_POS)
         ACHIVMENT_BACK.update(screen)
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -163,8 +310,7 @@ def achivment():
         pygame.display.update()
 
 
-
-main_menu()
+login()
                 
 
 
