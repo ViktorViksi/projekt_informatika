@@ -70,7 +70,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
                 if LOGIN_BACK.checkForInput(LOGIN_MOUSE_POS):
                     print(user_text)
-                    with open("login_podaci.txt",encoding="utf-8") as datoteka:
+                    with open("login_podaci.txt", encoding="utf-8") as datoteka:
                         podaci = datoteka.readlines()
                         if len(podaci) == 0:
                             podaci.append(f"{user_text}")
@@ -78,7 +78,8 @@ while True:
                             podaci.append(f"\n{user_text}")
                         podaci_text = "".join(podaci)
                     print(podaci)
-                    with open("login_podaci.txt","wt") as datoteka:
+                    print(podaci_text)
+                    with open("login_podaci.txt","wt",-1,encoding="utf-8") as datoteka:
                         datoteka.write(podaci_text)
                     
 
