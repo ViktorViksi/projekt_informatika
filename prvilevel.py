@@ -26,7 +26,7 @@ class Pirat():
         self.kretanje_lijevo=False
         self.jump=False
 
-        self.brzina= 2
+        self.brzina= 0.5
         self.gravity= 5
         self.jump_height= 15
 
@@ -79,6 +79,7 @@ class Novcic(pygame.sprite.Sprite):
 
     def update(self):
         self.novcic_rect.y += self.brzina_dropa
+        print(self.novcic_rect)
         
 
     def draw(self):
@@ -93,6 +94,7 @@ zavrsno_vrijeme=0
 vrijednost_novcica=1
 pocetak=0
 ukupno=0
+broj_levela=7
 
 
 
@@ -104,47 +106,50 @@ def sudar_sprite(novcic_rect):
     else: 
         return False
 
-def drop_novcici():
-    if len(objekti) == 0:
-        novi_novcic = Novcic()
-        objekti.add(novi_novcic)
+def drop_novcici(broj_levela):
+    if broj_levela>=1:
+        if len(objekti) == 0:
+            novi_novcic = Novcic()
+            objekti.add(novi_novcic)
 
-    if score>=10:
-        if len(objekti) == 1:
+    if broj_levela>=2:
+        if score>=5:
+            if len(objekti) == 1:
+                for objekt in objekti.sprites():
+                    if objekt.novcic_rect.bottom > 300:
+                        novi_novcic = Novcic()
+                        objekti.add(novi_novcic)
+
+    if broj_levela>=3:
+        if score>=10:
             for objekt in objekti.sprites():
-                if objekt.novcic_rect.bottom > 300:
-                    novi_novcic = Novcic()
-                    objekti.add(novi_novcic)
-        
-    # if score>=20:
-    #     for objekt in objekti.sprites():
-    #         objekt.brzina_dropa=1.2
-    
-    # if score>=30:
-    #     if len(objekti) == 2:
-    #         for objekt in objekti.sprites():
-    #             if objekt.novcic_rect.bottom > 550:
-    #                 novi_novcic = Novcic()
-    #                 objekti.add(novi_novcic)
-    
-    # if score>=40:
-    #     for objekt in objekti.sprites():
-    #         objekt.brzina_dropa=1.4
-        
-    # if score>=50:
-    #     if len(objekti) == 3:
-    #         for objekt in objekti.sprites():
-    #             if objekt.novcic_rect.bottom > 450:
-    #                 novi_novcic = Novcic()
-    #                 objekti.add(novi_novcic)
+                objekt.brzina_dropa=1.2
 
-    # if score>=60:
-    #     for objekt in objekti.sprites():
-    #         objekt.brzina_dropa=1.7
+    if broj_levela>=4:
+        if score>=15:
+            if len(objekti) == 2:
+                for objekt in objekti.sprites():
+                    if objekt.novcic_rect.bottom > 550:
+                        novi_novcic = Novcic()
+                        objekti.add(novi_novcic)
+    
+    if broj_levela>=5:
+        if score>=20:
+            for objekt in objekti.sprites():
+                objekt.brzina_dropa=1.4
 
-    # if score>=70:
-    #     for objekt in objekti.sprites():
-    #         objekt.brzina_dropa=2
+    if broj_levela>=6:
+        if score>=25:
+            if len(objekti) == 3:
+                for objekt in objekti.sprites():
+                    if objekt.novcic_rect.bottom > 450:
+                        novi_novcic = Novcic()
+                        objekti.add(novi_novcic)
+
+    if broj_levela>=7:
+        if score>=30:
+            for objekt in objekti.sprites():
+                objekt.brzina_dropa=1.8
 
 
     
@@ -215,7 +220,7 @@ while True:
         player.draw()
         player.update()
         
-        drop_novcici()
+        drop_novcici(broj_levela)
         for novcic in objekti.sprites():
             novcic.draw()
             novcic.update()
@@ -250,12 +255,16 @@ while True:
                     player.brzina=0
                     player.jump_height=0
                     player.gravity=0
+                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\freezelikpirata.png"), (120, 120)).convert_alpha()
                 elif special.specialbroj == 3:
                     player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (240, 240)).convert_alpha()
+                    player.pirat_rect=player.pirat_image.get_rect(bottom= (300, 650))
                 elif special.specialbroj == 4:
                     player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (90, 90)).convert_alpha()
+                    player.pirat_rect=player.pirat_image.get_rect(bottom= (300, 650))
                 elif special.specialbroj == 5:
                     player.brzina=3
+                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\speedlikpirata.png"), (120, 120)).convert_alpha()
 
                 pocetak=time.time()
                 pocetno_vrijeme=zavrsno_vrijeme
@@ -277,10 +286,10 @@ while True:
             player.jump_height=15
             player.gravity=5
             player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (120, 120)).convert_alpha()
+            player.pirat_rect=player.pirat_image.get_rect(midbottom= (300, 650))
             pocetak=time.time()
         
 
-        print(ukupno)
         if ukupno>=50:
             aktivnost_igrice=False
             print(postotak())
