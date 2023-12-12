@@ -143,7 +143,7 @@ def login():
                                 podaci.append(f"\n{user_text}")
                             podaci_text = "".join(podaci)
                         print(podaci)
-                        with open("login_podaci.txt","wt") as datoteka:
+                        with open("login_podaci.txt","wt",-1,encoding="utf-8") as datoteka:
                             datoteka.write(podaci_text)
                         main_menu()
                         
