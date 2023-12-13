@@ -7,7 +7,7 @@ pygame.init()
 pygame.display.set_caption("TheCatcher: Worldwide Thievery Thrust")
 
 screen=pygame.display.set_mode((600,750))
-background= pygame.image.load("Slike\\pozadina_igrica.jpg").convert()
+background= pygame.image.load("Slike\\pozadina_igrica.png").convert()
 
 
 aktivnost_igrice=True
@@ -19,14 +19,14 @@ class Pirat():
     def __init__(self):
         # self.pirat_image=pygame.image.load("Slike\\likpirata.png").convert_alpha()
         self.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (120, 120)).convert_alpha()
-        self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 650))
+        self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
         
 
         self.kretanje_desno=False
         self.kretanje_lijevo=False
         self.jump=False
 
-        self.brzina= 2
+        self.brzina= 1
         self.gravity= 5
         self.jump_height= 15
 
@@ -56,8 +56,8 @@ class Pirat():
 
                 screen.blit(self.pirat_image, self.pirat_rect)
 		    
-            if self.pirat_rect.bottom >= 650:
-                self.pirat_rect.bottom = 650
+            if self.pirat_rect.bottom >= 700:
+                self.pirat_rect.bottom = 700
 
     def update(self):
         self.kretanje_komande()
@@ -98,42 +98,46 @@ def drop_novcici():
         novi_novcic = Novcic()
         objekti.add(novi_novcic)
 
-    if score>=10:
+    if score>=30:
         if len(objekti) == 1:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 300:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
-    if score>=20:
+    if score>=60:
         for objekt in objekti.sprites():
-            objekt.brzina_dropa=1.5
+            objekt.brzina_dropa=1.2
     
-    if score>=30:
+    if score>=90:
         if len(objekti) == 2:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 550:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
     
-    if score>=40:
+    if score>=120:
         for objekt in objekti.sprites():
-            objekt.brzina_dropa=2
+            objekt.brzina_dropa=1.4
         
-    if score>=50:
+    if score>=150:
         if len(objekti) == 3:
             for objekt in objekti.sprites():
                 if objekt.novcic_rect.bottom > 450:
                     novi_novcic = Novcic()
                     objekti.add(novi_novcic)
 
-    if score>=60:
+    if score>=200:
         for objekt in objekti.sprites():
-            objekt.brzina_dropa=3
+            objekt.brzina_dropa=1.7
+
+    if score>=250:
+        for objekt in objekti.sprites():
+            objekt.brzina_dropa=2
 
 
     
     for objekt in objekti.sprites():
-        if objekt.novcic_rect.bottom > 660:
+        if objekt.novcic_rect.bottom > 700:
             objekti.remove(objekt)
     
 
@@ -156,7 +160,7 @@ while True:
 
         player.draw()
         player.update()
-
+        
         drop_novcici()
         for novcic in objekti.sprites():
             novcic.draw()
@@ -168,21 +172,21 @@ while True:
                 aktivnost_igrice=True
                 objekti.remove(novcic)
             else:
-                if novcic.novcic_rect.bottom > 660:
+                if novcic.novcic_rect.bottom > 700:
                     lives-=1
-                    if lives==0:
+                    if lives<=0:
                         aktivnost_igrice=False
                     else:
                         aktivnost_igrice=True
 
 
-            print (score)
-            print (lives)
+    print("Bolje")
+    print("Nego nista")
 
 
-        
-                    
-    
+            
+
+
     pygame.display.update()
 
 
