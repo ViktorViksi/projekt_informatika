@@ -31,6 +31,7 @@ with open("login_podaci.txt", encoding="utf-8") as datoteka:
     for i in range(len(podaci)):
         podaci[i].split(" ")
 
+
 def login():
     user_text = ""
     
@@ -169,16 +170,19 @@ class Scroll():
             return True
 
 
-def pause_options(scrn, oldScreen):
+def pause_options(scrn, score):
     test_font = pygame.font.Font(None, 50)
     naslov_font = pygame.font.Font(None, 150)
     podnaslov_font = pygame.font.Font(None, 100)
     oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     scrn.blit(s, (20,20))
+    
+    natrag = False
+    
     while True:
         global zvuk
         global stisnut
@@ -268,7 +272,6 @@ def pause_options(scrn, oldScreen):
 
 
 
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -276,8 +279,7 @@ def pause_options(scrn, oldScreen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     click_sound.play()
-                    scrn.blit(oldScreen, (0,0))
-                    pause_menu()
+                    natrag = True
                 if OPTIONS_MUSIC.checkForInput(OPTIONS_MOUSE_POS):
                     if zvuk == 0:
                         zvuk = 0.5
@@ -301,7 +303,152 @@ def pause_options(scrn, oldScreen):
                         stisnut2 = 1
 
         pygame.display.update()
+        
+        if natrag:
+            scrn.blit(oldScreen, (0,0))
+            pygame.display.update()
+            break
+
+
+def level_options(scrn, score):
+    test_font = pygame.font.Font(None, 50)
+    naslov_font = pygame.font.Font(None, 150)
+    podnaslov_font = pygame.font.Font(None, 100)
+    oldScreen = pygame.Surface.copy(scrn)
+    s = pygame.Surface((560, 710))
+    s.set_alpha(170)
+    s.fill((55, 71, 79))
     
+    scrn.blit(s, (20,20))
+    
+    natrag = False
+    
+    while True:
+        global zvuk
+        global stisnut
+        global zvuk2
+        global stisnut2
+
+        scrn.blit(s, (20,20))
+        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+        
+        
+
+        opcije_tekst = naslov_font.render("Opcije" ,False, "White")
+        opcije_rect = opcije_tekst.get_rect(center = (300, 60))
+        screen.blit(opcije_tekst, opcije_rect)
+
+
+        muzika_tekst = podnaslov_font.render("Muzika" ,False, "Gray")
+        muzika_rect = muzika_tekst.get_rect(center = (200, 230))
+        screen.blit(muzika_tekst, muzika_rect)
+
+        racun = round(zvuk,2)*100
+        zvuk_tekst = test_font.render(f"{round(racun)}%",False, "Black")
+        zvuk_rect = zvuk_tekst.get_rect(center = (500, 300))
+        pygame.draw.rect(screen, "White", zvuk_rect)
+        pygame.draw.rect(screen, "Brown", zvuk_rect,2)
+        screen.blit(zvuk_tekst, zvuk_rect)
+
+
+        efekt_tekst = podnaslov_font.render("Zvučni efekti" ,False, "Gray")
+        efekt_rect = efekt_tekst.get_rect(center = (270, 430))
+        screen.blit(efekt_tekst, efekt_rect)
+
+
+        racun2 = round(zvuk2,2)*100
+        zvuk2_tekst = test_font.render(f"{round(racun2)}%",False, "Black")
+        zvuk2_rect = zvuk2_tekst.get_rect(center = (500, 500))
+        pygame.draw.rect(screen, "White", zvuk2_rect)
+        pygame.draw.rect(screen, "Brown", zvuk2_rect,2)
+        screen.blit(zvuk2_tekst, zvuk2_rect)
+
+        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb5.png").convert(), (100, 700), "Vrati se", test_font, "White", "Green")
+
+        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
+        OPTIONS_BACK.update(screen)
+
+        OPTIONS_SOUND = Scroll(pygame.image.load("Slike/Menu/Scol_linija1.png").convert(), (100, 300), pygame.image.load("Slike/Menu/Scrol_gumb.png").convert())
+        
+        OPTIONS_SOUND.update(screen)
+
+        OPTIONS_SOUND2 = Scroll(pygame.image.load("Slike/Menu/Scol_linija1.png").convert(), (100, 500), pygame.image.load("Slike/Menu/Scrol_gumb.png").convert())
+        
+        OPTIONS_SOUND2.update(screen)
+
+        if stisnut == 0:
+            OPTIONS_MUSIC = Gumb(pygame.image.load("Slike/Menu/Unmute.png").convert(), (50, 300), "", test_font, "White", "Green")
+            OPTIONS_MUSIC.changeColor(OPTIONS_MOUSE_POS)
+            OPTIONS_MUSIC.update(screen)
+        else:
+            OPTIONS_MUSIC = Gumb(pygame.image.load("Slike/Menu/Mute.png").convert(), (50, 300), "", test_font, "White", "Green")
+            OPTIONS_MUSIC.changeColor(OPTIONS_MOUSE_POS)
+            OPTIONS_MUSIC.update(screen)
+
+        if stisnut2 == 0:
+            OPTIONS_MUSIC2 = Gumb(pygame.image.load("Slike/Menu/Unmute.png").convert(), (50, 500), "", test_font, "White", "Green")
+            OPTIONS_MUSIC2.changeColor(OPTIONS_MOUSE_POS)
+            OPTIONS_MUSIC2.update(screen)
+        else:
+            OPTIONS_MUSIC2 = Gumb(pygame.image.load("Slike/Menu/Mute.png").convert(), (50, 500), "", test_font, "White", "Green")
+            OPTIONS_MUSIC2.changeColor(OPTIONS_MOUSE_POS)
+            OPTIONS_MUSIC2.update(screen)
+
+
+        if OPTIONS_SOUND.checkForInput1(OPTIONS_MOUSE_POS):  
+            if OPTIONS_SOUND.changeButtonPosition(OPTIONS_MOUSE_POS, screen, zvuk):
+                zvuk = (OPTIONS_MOUSE_POS[0]- 110)/280
+                bg_music.set_volume(zvuk)
+                pygame.mixer.unpause()
+                stisnut = 0
+
+        if OPTIONS_SOUND2.checkForInput1(OPTIONS_MOUSE_POS):  
+            if OPTIONS_SOUND2.changeButtonPosition(OPTIONS_MOUSE_POS, screen, zvuk):
+                zvuk2 = (OPTIONS_MOUSE_POS[0]- 110)/280
+                print(racun2)
+                click_sound.set_volume(zvuk2)
+                stisnut2 = 0
+
+
+
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    click_sound.play()
+                    natrag = True
+                if OPTIONS_MUSIC.checkForInput(OPTIONS_MOUSE_POS):
+                    if zvuk == 0:
+                        zvuk = 0.5
+                        pygame.mixer.unpause()
+                        bg_music.set_volume(zvuk)
+                        stisnut = 0
+                    else:
+                        zvuk = 0
+                        pygame.mixer.pause()
+                        stisnut = 1
+                if OPTIONS_MUSIC2.checkForInput(OPTIONS_MOUSE_POS):
+                    if zvuk2 == 0:
+                        zvuk2 = 0.5
+                        click_sound.set_volume(zvuk2)
+                        print(zvuk2)
+                        stisnut2 = 0
+                    else:
+                        zvuk2 = 0
+                        click_sound.set_volume(zvuk2)
+                        print(zvuk2)
+                        stisnut2 = 1
+
+        pygame.display.update()
+        
+        if natrag:
+            scrn.blit(oldScreen, (0,0))
+            pygame.display.update()
+            break
+
     
 def ispis(lista):
     with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
@@ -312,7 +459,7 @@ def pause_menu(scrn, score):
     test_font = pygame.font.Font(None, 50)
     oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     scrn.blit(s, (20,20))
@@ -351,6 +498,8 @@ def pause_menu(scrn, score):
                     nastavi = True
                 if OPTIONS.checkForInput(PAUSE_MOUSE_POS):
                     pause_options(scrn, oldScreen)
+                    scrn.blit(oldScreen, (0,0))
+                    pause_menu(scrn, score)
                 if MENU.checkForInput(PAUSE_MOUSE_POS):
                     main_menu()
                     
@@ -367,7 +516,7 @@ def level_pause(scrn, score):
     test_font = pygame.font.Font(None, 50)
     oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     scrn.blit(s, (20,20))
@@ -405,7 +554,7 @@ def level_pause(scrn, score):
                 if NASTAVI.checkForInput(PAUSE_MOUSE_POS) or PAUSE_BACK.checkForInput(PAUSE_MOUSE_POS):
                     nastavi = True
                 if OPTIONS.checkForInput(PAUSE_MOUSE_POS):
-                    pause_options(scrn, oldScreen)
+                    level_options(scrn, score)
                 if MENU.checkForInput(PAUSE_MOUSE_POS):
                     main_menu()
                     
@@ -421,7 +570,7 @@ def level_pause(scrn, score):
 def game_over(scrn, score, hscore):
     test_font = pygame.font.Font(None, 50)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     scrn.blit(s, (20,20))
@@ -468,7 +617,7 @@ def level_start(scrn, brojLevela, type):
     test_font = pygame.font.Font(None, 50)
     oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     if type == "l":
@@ -583,7 +732,7 @@ def level_end(scrn, brojLevela, type):
     test_font = pygame.font.Font(None, 50)
     oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
-    s.set_alpha(128)
+    s.set_alpha(170)
     s.fill((55, 71, 79))
     
     scrn.blit(s, (20,20))
@@ -601,16 +750,20 @@ def level_end(scrn, brojLevela, type):
         
         if type < 50:
             image = pygame.image.load("Slike/Menu/stars_0.png")
-            scrn.blit(image.get_rect(center = (300, 200)))
+            image_rect = image.get_rect(center=(300,200))
+            scrn.blit(image, image_rect)
         elif type >= 50 and type < 70:
             image = pygame.image.load("Slike/Menu/stars_1.png")
-            scrn.blit(image.get_rect(center = (300, 200)))
+            image_rect = image.get_rect(center=(300,200))
+            scrn.blit(image, image_rect)
         elif type >= 70 and type < 90:
             image = pygame.image.load("Slike/Menu/stars_2.png")
-            scrn.blit(image.get_rect(center = (300, 200)))
+            image_rect = image.get_rect(center=(300,200))
+            scrn.blit(image, image_rect)
         elif type >= 90:
             image = pygame.image.load("Slike/Menu/stars_3.png")
-            scrn.blit(image.get_rect(center = (300, 200)))
+            image_rect = image.get_rect(center=(300,200))
+            scrn.blit(image, image_rect)
 
         for gumb in [PONOVO, NATRAG]:
             gumb.changeColor(MENU_MOUSE_POS)
