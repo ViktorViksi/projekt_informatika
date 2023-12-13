@@ -481,7 +481,7 @@ def level_start(scrn, brojLevela, type):
     if brojLevela == 1:
         tekst = "LEVEL 1 - NEW YORK"
     elif brojLevela == 2:
-        tekst = "LEVEL 2 - BUENOS AIRES"
+        tekst = "LEVEL 2 - BRAZIL"
     elif brojLevela == 3:
         tekst = "LEVEL 3 - PARIS"
     elif brojLevela == 4:
@@ -492,8 +492,6 @@ def level_start(scrn, brojLevela, type):
         tekst = "LEVEL 6 - AUSTRALIA"
     elif brojLevela == 7:
         tekst = "LEVEL 7 - ANTARCTICA"
-    elif brojLevela == 8:
-        tekst = "LEVEL BONUS - DALMACIJA"
     
     natrag = False
     
