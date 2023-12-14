@@ -459,6 +459,7 @@ def level_options(scrn, score):
 
     
 def ispis(lista):
+    lista[1] = high_score
     with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
         datoteka.writelines(lista)
 
