@@ -37,9 +37,11 @@ pygame.init()
 screen = pygame.display.set_mode((600, 750))
 pygame.display.set_caption("Menu")
 test_font = pygame.font.Font(None, 50) 
+login_font =  pygame.font.Font(None, 45)
+
 user_text = ""
 
-input_rect = pygame.Rect(145,300,310,45)
+input_rect = pygame.Rect(140,300,315,40)
 color_active = pygame.Color("lightskyblue3")  #može i rgb
 color_passive = pygame.Color("gray15")
 color = color_passive
@@ -103,7 +105,7 @@ while True:
         color = color_passive
     pygame.draw.rect(screen,color,input_rect, 2)
 
-    text_srurface = test_font.render(user_text,True, "Green")
+    text_srurface = login_font.render(user_text,True, "Green")
     
     screen.blit(text_srurface, (input_rect.x +5,input_rect.y +5))
 
