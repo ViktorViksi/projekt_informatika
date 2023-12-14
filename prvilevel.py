@@ -1,16 +1,12 @@
 import pygame
-import sys
 from random import *
 import time
-
-from pygame import image
 
 
 pygame.init()
 pygame.display.set_caption("TheCatcher: Worldwide Thievery Thrust")
 
 screen=pygame.display.set_mode((600,750))
-background= pygame.image.load("Slike\\levelSAD.png").convert()
 
 
 aktivnost_igrice=True
@@ -20,7 +16,7 @@ score=0
 class Pirat():
     def __init__(self):
         # self.pirat_image=pygame.image.load("Slike\\likpirata.png").convert_alpha()
-        self.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (120, 120)).convert_alpha()
+        self.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (110, 180)).convert_alpha()
         self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
         
 
@@ -28,7 +24,7 @@ class Pirat():
         self.kretanje_lijevo=False
         self.jump=False
 
-        self.brzina= 30
+        self.brzina= 4
         self.gravity= 5
         self.jump_height= 15
 
@@ -58,8 +54,8 @@ class Pirat():
 
                 screen.blit(self.pirat_image, self.pirat_rect)
 		    
-            if self.pirat_rect.bottom >= 700:
-                self.pirat_rect.bottom = 700
+        if self.pirat_rect.bottom >= 700:
+            self.pirat_rect.bottom = 700
 
     def update(self):
         self.kretanje_komande()
@@ -73,23 +69,23 @@ class Novcic(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         if broj_levela==1:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelUSA.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelUSA.png"), (40,40)).convert_alpha()
         elif broj_levela==2:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelBrazil.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelBrazil.png"), (40,40)).convert_alpha()
         elif broj_levela==3:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelAntarktika.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelAntarktika.png"), (40,40)).convert_alpha()
         elif broj_levela==4:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelEgipat.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelEgipat.png"), (40,40)).convert_alpha()
         elif broj_levela==5:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelPariz.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelPariz.png"), (50,50)).convert_alpha()
         elif broj_levela==6:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelKina.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelKina.png"), (50,50)).convert_alpha()
         elif broj_levela==7:
-            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelAustralija.png"), (30,30)).convert_alpha()
+            self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\novciclevelAustralija.png"), (40,40)).convert_alpha()
         
-        self.novcic_rect=self.novcic_slika.get_rect(midtop= (randint(150, 450), -50))
+        self.novcic_rect=self.novcic_slika.get_rect(midtop= (randint(150, 450), -60))
 
-        self.brzina_dropa=30
+        self.brzina_dropa=2
 
         self.specialbroj=0
 
@@ -110,10 +106,7 @@ zavrsno_vrijeme=0
 vrijednost_novcica=1
 pocetak=0
 ukupno=0
-broj_levela=7
-
-
-
+broj_levela=4
 
 
 def sudar_sprite(novcic_rect):
@@ -123,15 +116,12 @@ def sudar_sprite(novcic_rect):
         return False
 
 def drop_novcici(broj_levela):
-    global background
     if broj_levela>=1:
-        background= pygame.image.load("Slike\\levelSAD.png").convert()
         if len(objekti) == 0:
             novi_novcic = Novcic()
             objekti.add(novi_novcic)
 
     if broj_levela>=2:
-        background= pygame.image.load("Slike\\levelBrazil.png").convert()
         if score>=5:
             if len(objekti) == 1:
                 for objekt in objekti.sprites():
@@ -140,13 +130,11 @@ def drop_novcici(broj_levela):
                         objekti.add(novi_novcic)
 
     if broj_levela>=3:
-        background= pygame.image.load("Slike\\levelAntarktika.png").convert()
         if score>=10:
             for objekt in objekti.sprites():
                 objekt.brzina_dropa=1.2
 
     if broj_levela>=4:
-        background= pygame.image.load("Slike\\levelEgipat.png").convert()
         if score>=15:
             if len(objekti) == 2:
                 for objekt in objekti.sprites():
@@ -155,13 +143,11 @@ def drop_novcici(broj_levela):
                         objekti.add(novi_novcic)
     
     if broj_levela>=5:
-        background= pygame.image.load("Slike\\levelPariz.png").convert()
         if score>=20:
             for objekt in objekti.sprites():
                 objekt.brzina_dropa=1.4
 
     if broj_levela>=6:
-        background= pygame.image.load("Slike\\levelKina.png").convert()
         if score>=25:
             if len(objekti) == 3:
                 for objekt in objekti.sprites():
@@ -170,7 +156,6 @@ def drop_novcici(broj_levela):
                         objekti.add(novi_novcic)
 
     if broj_levela>=7:
-        background= pygame.image.load("Slike\\levelAustralija.png").convert()
         if score>=30:
             for objekt in objekti.sprites():
                 objekt.brzina_dropa=1.8
@@ -226,6 +211,46 @@ def specials_drop():
 def postotak():
     return(f"{(score/ukupno)*100}%")
 
+def odabir_pozadine(broj_levela):
+    global background
+
+    if broj_levela==1:
+        background= pygame.image.load("Slike\\levelSAD.png").convert()
+        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\pirateskrilima.png"), (110,180)).convert_alpha()
+    elif broj_levela==2:
+        background= pygame.image.load("Slike\\levelBrazil.png").convert()
+    elif broj_levela==3:
+        background= pygame.image.load("Slike\\levelAntarktika.png").convert()
+    elif broj_levela==4:
+        background= pygame.image.load("Slike\\levelEgipat.png").convert()
+    elif broj_levela==5:
+        background= pygame.image.load("Slike\\levelPariz.png").convert()
+    elif broj_levela==6:
+        background= pygame.image.load("Slike\\levelKina.png").convert()
+    elif broj_levela==7:
+        background= pygame.image.load("Slike\\levelAustralija.png").convert()
+
+
+def specials_radnja():
+    global vrijednost_novcica
+    if special.specialbroj== 1:
+        vrijednost_novcica=2
+    elif special.specialbroj == 2:
+        player.brzina=0
+        player.jump_height=0
+        player.gravity=0
+        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\freezelikpirata.png"), (110, 180)).convert_alpha()
+    elif special.specialbroj == 3:
+        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (220, 360)).convert_alpha()
+        player.pirat_rect=player.pirat_image.get_rect(midbottom= (300, 700))
+    elif special.specialbroj == 4:
+        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (55, 90)).convert_alpha()
+        player.pirat_rect=player.pirat_image.get_rect(midbottom= (300, 700))
+    elif special.specialbroj == 5:
+        player.brzina=3
+        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\speedlikpirata.png"), (110, 180)).convert_alpha()
+
+
 
 # player = pygame.sprite.GroupSingle()
 # player.add(Pirat())
@@ -237,25 +262,8 @@ while True:
 	    if event.type == pygame.QUIT:
 		    pygame.quit()
 		    exit()
-
+    odabir_pozadine(broj_levela)
     if aktivnost_igrice:
-        if broj_levela==1:
-            background= pygame.image.load("Slike\\levelSAD.png").convert()
-            player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\pirateskrilima.png"), (120,120)).convert_alpha()
-        elif broj_levela==2:
-            background= pygame.image.load("Slike\\levelBrazil.png").convert()
-        elif broj_levela==3:
-            background= pygame.image.load("Slike\\levelAntarktika.png").convert()
-        elif broj_levela==4:
-            background= pygame.image.load("Slike\\levelEgipat.png").convert()
-        elif broj_levela==5:
-            background= pygame.image.load("Slike\\levelPariz.png").convert()
-        elif broj_levela==6:
-            background= pygame.image.load("Slike\\levelKina.png").convert()
-        elif broj_levela==7:
-            background= pygame.image.load("Slike\\levelAustralija.png").convert()
-
-        
         screen.blit(background, (0,0))
 
         player.draw()
@@ -278,6 +286,8 @@ while True:
             if objekt.novcic_rect.bottom > 700:
                 objekti.remove(objekt)
                 ukupno+=1
+
+    
         
         zavrsno_vrijeme=time.time()
 
@@ -288,26 +298,30 @@ while True:
             for special in specials.sprites():
                 special.draw()
                 special.update()
-            
+
             if sudar_sprite(special.novcic_rect)==True:
-                if special.specialbroj== 1:
-                    vrijednost_novcica=2
-                elif special.specialbroj == 2:
-                    player.brzina=0
-                    player.jump_height=0
-                    player.gravity=0
-                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\freezelikpirata.png"), (120, 120)).convert_alpha()
-                elif special.specialbroj == 3:
-                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (240, 240)).convert_alpha()
-                elif special.specialbroj == 4:
-                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (90, 90)).convert_alpha()
-                elif special.specialbroj == 5:
-                    player.brzina=3
-                    player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\speedlikpirata.png"), (120, 120)).convert_alpha()
+                specials_radnja
+            
+            # if sudar_sprite(special.novcic_rect)==True:
+            #     if special.specialbroj== 1:
+            #         vrijednost_novcica=2
+            #     elif special.specialbroj == 2:
+            #         player.brzina=0
+            #         player.jump_height=0
+            #         player.gravity=0
+            #         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\freezelikpirata.png"), (120, 120)).convert_alpha()
+            #     elif special.specialbroj == 3:
+            #         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (240, 240)).convert_alpha()
+            #     elif special.specialbroj == 4:
+            #         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (90, 90)).convert_alpha()
+            #     elif special.specialbroj == 5:
+            #         player.brzina=3
+            #         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\speedlikpirata.png"), (120, 120)).convert_alpha()
 
                 pocetak=time.time()
                 pocetno_vrijeme=zavrsno_vrijeme
                 zavrsno_vrijeme=0
+                
                 for special in specials.sprites():
                     specials.remove(special)
 
@@ -315,8 +329,11 @@ while True:
 
                                     
         for special in specials.sprites():
-            if special.novcic_rect.bottom > 660:
+            if special.novcic_rect.bottom > 700:
                 specials.remove(special)
+                pocetno_vrijeme=zavrsno_vrijeme
+                zavrsno_vrijeme=0
+                
 
 
         if time.time()-pocetak>=6:
@@ -331,7 +348,7 @@ while True:
         if ukupno>=50:
             aktivnost_igrice=False
             print(postotak())
-            screen.blit(pygame.image.load("Slike\\pozadina_igrica.jpg"), (0,0))
+
 
     pygame.display.update()
 

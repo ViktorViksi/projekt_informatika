@@ -18,7 +18,7 @@ lives=3
 class Pirat():
     def __init__(self):
         # self.pirat_image=pygame.image.load("Slike\\likpirata.png").convert_alpha()
-        self.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (120, 120)).convert_alpha()
+        self.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\likpirata.png"), (110, 180)).convert_alpha()
         self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
         
 
@@ -180,8 +180,6 @@ while True:
                         aktivnost_igrice=True
 
 
-    print("Bolje")
-    print("Nego nista")
 
 
             
