@@ -805,12 +805,22 @@ def level_end(scrn, brojLevela, type):
             scrn.blit(image, image_rect)
             if podaci[data][2][brojLevela] == "0" or podaci[data][2][brojLevela] == "1":
                 podaci[data][2][brojLevela] == "2"
+                try:
+                    if podaci[data][2][brojLevela+1] == "l":
+                        podaci[data][2][brojLevela+1] = "0"
+                except:
+                    continue
                 
         elif type >= 90:
             image = pygame.image.load("Slike/Menu/stars_3.png")
             image_rect = image.get_rect(center=(300,200))
             scrn.blit(image, image_rect)
             podaci[data][2][brojLevela] = "3"
+            try:
+                if podaci[data][2][brojLevela+1] == "l":
+                    podaci[data][2][brojLevela+1] = "0"
+            except:
+                continue
 
 
         for gumb in [PONOVO, NATRAG]:
