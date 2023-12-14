@@ -1418,7 +1418,7 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
         screen.blit(menu_surface, (0,0))
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        menu_tekst = test_font.render("MAIN MENU",True, "Black")
+        menu_tekst = test_font.render("THE CATCHER",True, "Black")
         menu_rect = menu_tekst.get_rect(center = (300, 100))
 
         #Gumb(image, pos, text_input, font, base_color, hovering_color)
