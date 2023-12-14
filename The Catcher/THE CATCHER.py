@@ -40,7 +40,7 @@ with open("login_podaci.txt", encoding="utf-8") as datoteka:
     podaci = datoteka.readlines()
     for i in range(len(podaci)):
         podaci[i] = podaci[i].split(" ")
-        podaci[i][2] = podaci[i][2].split("_")
+        podaci[i][2] = podaci[i][2].split("")
 
 print(podaci)
 
@@ -82,11 +82,13 @@ def login():
             if event.type == pygame.MOUSEBUTTONDOWN:
                     if LOGIN_BACK.checkForInput(LOGIN_MOUSE_POS):
                         for i in range(len(podaci)):
-                            if user_text.upper() == podaci[i][0]:
+                            if len(user_text) == 0:
+                                user_text = privremeno
+                            elif user_text.upper() == podaci[i][0]:
                                 data = i
                                 high_score = int(podaci[data][1])
                                 main_menu()
-                        podaci.append([user_text.upper(), "0", "0_0_l_l_l_l_l_l"]) #ovo ce bit nacin zapisivanja podataka al nije gotov
+                        podaci.append([user_text.upper(), "0", "00llllll"]) #ovo ce bit nacin zapisivanja podataka al nije gotov
                         data = len(podaci)-1
                         high_score = int(podaci[data][1])
                         main_menu()
@@ -468,15 +470,16 @@ def level_options(scrn, score):
 
     
 def ispis(lista):
-    lista[data][1] = str(high_score)
-    for i in range(len(lista)):
-        string1 = "_".join(lista[i][2])
-        lista[i][2] = string1
-        string2 = " ".join(lista[i])
-        lista[i] = string2
+    if lista[data] != "PRIVREMENO":
+        lista[data][1] = str(high_score)
+        for i in range(len(lista)):
+            string1 = "".join(lista[i][2])
+            lista[i][2] = string1
+            string2 = " ".join(lista[i])
+            lista[i] = string2
 
-    with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
-        datoteka.writelines(lista)
+        with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
+            datoteka.writelines(lista)
 
 
 def pause_menu(scrn, score):
