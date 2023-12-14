@@ -822,7 +822,6 @@ def level(broj_levela):
 
     class Pirat():
         def __init__(self):
-            # self.pirat_image=pygame.image.load("Slike\\likpirata.png").convert_alpha()
             self.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (120, 120)).convert_alpha()
             self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
             
@@ -1007,7 +1006,7 @@ def level(broj_levela):
             elif rendom == 4:
                 special=Novcic()
                 specials.add(special)
-                special.novcic_slika=pygame.transform.scale(pygame.image.load("SlikeLevels/smanjenjespecial.png"), (30, 30)).convert_alpha()
+                special.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/smanjenjespecial.png"), (30, 30)).convert_alpha()
                 special.specialbroj=4
 
 
