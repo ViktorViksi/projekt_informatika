@@ -26,17 +26,21 @@ click_sound.set_volume(zvuk2)
 stisnut = 0
 stisnut2 = 0
 
+podaci = []
 with open("login_podaci.txt", encoding="utf-8") as datoteka:
     podaci = datoteka.readlines()
     for i in range(len(podaci)):
-        podaci[i].split(" ")
+        podaci[i] = podaci[i].split(" ")
+        podaci[i][2] = podaci[i][2].split("_")
 
+print(podaci)
 
 def login():
     user_text = ""
     
     global podaci
     global data
+    global high_score
     
     input_rect = pygame.Rect(145,300,310,45)
     color_active = pygame.Color("lightskyblue3")  #može i rgb
@@ -71,9 +75,11 @@ def login():
                         for i in range(len(podaci)):
                             if user_text.upper() == podaci[i][0]:
                                 data = i
+                                high_score = int(podaci[data][1])
                                 main_menu()
-                        podaci.append([user_text.upper(), "0", "00llllll"]) #ovo ce bit nacin zapisivanja podataka al nije gotov
+                        podaci.append([user_text.upper(), "0", "0_0_l_l_l_l_l_l"]) #ovo ce bit nacin zapisivanja podataka al nije gotov
                         data = len(podaci)-1
+                        high_score = int(podaci[data][1])
                         main_menu()
                         
 
@@ -274,6 +280,7 @@ def pause_options(scrn, score):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -414,6 +421,7 @@ def level_options(scrn, score):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -491,6 +499,7 @@ def pause_menu(scrn, score):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -548,6 +557,7 @@ def level_pause(scrn, score):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -602,6 +612,7 @@ def game_over(scrn, score, hscore):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -632,15 +643,15 @@ def level_start(scrn, brojLevela, type):
     elif brojLevela == 2:
         tekst = "LEVEL 2 - BRAZIL"
     elif brojLevela == 3:
-        tekst = "LEVEL 3 - PARIS"
+        tekst = "LEVEL 3 - ANTARCTICA"
     elif brojLevela == 4:
-        tekst = "LEVEL 4 - SAHARA"
+        tekst = "LEVEL 4 - EGYPT"
     elif brojLevela == 5:
-        tekst = "LEVEL 5 - THE GREAT WALL"
+        tekst = "LEVEL 5 - PARIS"
     elif brojLevela == 6:
-        tekst = "LEVEL 6 - AUSTRALIA"
+        tekst = "LEVEL 6 - CHINA"
     elif brojLevela == 7:
-        tekst = "LEVEL 7 - ANTARCTICA"
+        tekst = "LEVEL 7 - AUSTRALIA"
     
     natrag = False
     
@@ -654,17 +665,18 @@ def level_start(scrn, brojLevela, type):
             msg_tekst = test_font.render(f"Level je zaključan",True, "Black")
             msg_rect = msg_tekst.get_rect(center = (300, 200))
             
-            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 550, "NATRAG", test_font, "Black", "White"))
+            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 550), "NATRAG", test_font, "Black", "White")
 
             scrn.blit(intro_tekst,intro_rect)
             scrn.blit(msg_tekst, msg_rect)
 
-            for gumb in [IGRAJ, NATRAG]:
+            for gumb in [NATRAG]:
                 gumb.changeColor(MENU_MOUSE_POS)
                 gumb.update(screen)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    ispis(podaci)
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -675,7 +687,7 @@ def level_start(scrn, brojLevela, type):
             
             if natrag:
                 break
-        scrn.blit(oldScreen)
+        scrn.blit(oldScreen, (0,0))
         
     else:
         while True:
@@ -689,19 +701,19 @@ def level_start(scrn, brojLevela, type):
 
             scrn.blit(intro_tekst,intro_rect)
             
-            if type == 0:
+            if type == "0":
                 image = pygame.image.load("Slike/Menu/stars_0.png")
                 image_rect = image.get_rect(center=(300,200))
                 scrn.blit(image, image_rect)
-            elif type == 1:
+            elif type == "1":
                 image = pygame.image.load("Slike/Menu/stars_1.png")
                 image_rect = image.get_rect(center=(300,200))
                 scrn.blit(image, image_rect)
-            elif type == 2:
+            elif type == "2":
                 image = pygame.image.load("Slike/Menu/stars_2.png")
                 image_rect = image.get_rect(center=(300,200))
                 scrn.blit(image, image_rect)
-            elif type == 3:
+            elif type == "3":
                 image = pygame.image.load("Slike/Menu/stars_3.png")
                 image_rect = image.get_rect(center=(300,200))
                 scrn.blit(image, image_rect)
@@ -713,6 +725,7 @@ def level_start(scrn, brojLevela, type):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    ispis(podaci)
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -725,12 +738,12 @@ def level_start(scrn, brojLevela, type):
             
             if natrag:
                 break
-        scrn.blit(oldScreen)
+        scrn.blit(oldScreen, (0,0))
 
 
 def level_end(scrn, brojLevela, type):
+    global podaci
     test_font = pygame.font.Font(None, 50)
-    oldScreen = pygame.Surface.copy(scrn)
     s = pygame.Surface((560, 710))
     s.set_alpha(170)
     s.fill((55, 71, 79))
@@ -756,14 +769,26 @@ def level_end(scrn, brojLevela, type):
             image = pygame.image.load("Slike/Menu/stars_1.png")
             image_rect = image.get_rect(center=(300,200))
             scrn.blit(image, image_rect)
+            if podaci[data][2][brojLevela] == "0":
+                podaci[data][2][brojLevela] == "1"
+                try:
+                    if podaci[data][2][brojLevela+1] == "l":
+                        podaci[data][2][brojLevela+1] = "0"
+                except:
+                    continue
+                
         elif type >= 70 and type < 90:
             image = pygame.image.load("Slike/Menu/stars_2.png")
             image_rect = image.get_rect(center=(300,200))
             scrn.blit(image, image_rect)
+            if podaci[data][2][brojLevela] == "0" or podaci[data][2][brojLevela] == "1":
+                podaci[data][2][brojLevela] == "2"
+                
         elif type >= 90:
             image = pygame.image.load("Slike/Menu/stars_3.png")
             image_rect = image.get_rect(center=(300,200))
             scrn.blit(image, image_rect)
+            podaci[data][2][brojLevela] = "3"
 
         for gumb in [PONOVO, NATRAG]:
             gumb.changeColor(MENU_MOUSE_POS)
@@ -772,6 +797,7 @@ def level_end(scrn, brojLevela, type):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -783,35 +809,11 @@ def level_end(scrn, brojLevela, type):
             pygame.display.update()
 
 
-def level(brojLevela):
+def level(broj_levela):
     pygame.init()
     pygame.display.set_caption("TheCatcher: Worldwide Thievery Thrust")
-
-    if brojLevela == 1:
-        background = pygame.image.load("Slike/Levels/Level 1/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 1/novcic.png").convert_alpha()
-    elif brojLevela == 2:
-        background = pygame.image.load("Slike/Levels/Level 2/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 2/novcic.png").convert_alpha()
-    elif brojLevela == 3:
-        background = pygame.image.load("Slike/Levels/Level 3/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 3/novcic.png").convert_alpha()
-    elif brojLevela == 4:
-        background = pygame.image.load("Slike/Levels/Level 4/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 4/novcic.png").convert_alpha()
-    elif brojLevela == 5:
-        background = pygame.image.load("Slike/Levels/Level 5/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 5/novcic.png").convert_alpha()
-    elif brojLevela == 6:
-        background = pygame.image.load("Slike/Levels/Level 6/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 6/novcic.png").convert_alpha()
-    elif brojLevela == 7:
-        background = pygame.image.load("Slike/Levels/Level 7/background.png").convert()
-        slika_novcic = pygame.image.load("Slike/Levels/Level 7/novcic.png").convert_alpha()
-        
     
     screen=pygame.display.set_mode((600,750))
-    test_font = pygame.font.Font(None, 50)
 
 
     aktivnost_igrice=True
@@ -820,15 +822,16 @@ def level(brojLevela):
 
     class Pirat():
         def __init__(self):
+            # self.pirat_image=pygame.image.load("Slike\\likpirata.png").convert_alpha()
             self.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (120, 120)).convert_alpha()
-            self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 650))
+            self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
             
 
             self.kretanje_desno=False
             self.kretanje_lijevo=False
             self.jump=False
 
-            self.brzina= 2
+            self.brzina= 30
             self.gravity= 5
             self.jump_height= 15
 
@@ -838,6 +841,7 @@ def level(brojLevela):
                 self.kretanje_desno = True
             if keys[pygame.K_LEFT]:
                 self.kretanje_lijevo = True
+            # if event.type == pygame.KEYDOWN: 
             if keys[pygame.K_SPACE]:
                 self.jump = True
         
@@ -857,8 +861,8 @@ def level(brojLevela):
 
                     screen.blit(self.pirat_image, self.pirat_rect)
                 
-                if self.pirat_rect.bottom >= 650:
-                    self.pirat_rect.bottom = 650
+                if self.pirat_rect.bottom >= 700:
+                    self.pirat_rect.bottom = 700
 
         def update(self):
             self.kretanje_komande()
@@ -871,15 +875,30 @@ def level(brojLevela):
     class Novcic(pygame.sprite.Sprite):
         def __init__(self):
             super().__init__()
-            self.novcic_slika = slika_novcic
+            if broj_levela==1:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 1/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==2:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 2/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==3:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 3/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==4:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 4/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==5:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 5/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==6:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 6/novcic.png"), (30,30)).convert_alpha()
+            elif broj_levela==7:
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 7/novcic.png"), (30,30)).convert_alpha()
+            
             self.novcic_rect=self.novcic_slika.get_rect(midtop= (randint(150, 450), -50))
 
-            self.brzina_dropa=1
+            self.brzina_dropa=30
 
             self.specialbroj=0
 
         def update(self):
             self.novcic_rect.y += self.brzina_dropa
+
             
 
         def draw(self):
@@ -905,17 +924,60 @@ def level(brojLevela):
         else: 
             return False
 
-    def drop_novcici():
-        if len(objekti) == 0:
-            novi_novcic = Novcic()
-            objekti.add(novi_novcic)
+    def drop_novcici(broj_levela):
+        global background
+        if broj_levela>=1:
+            background= pygame.image.load("Slike/Levels/Level 1/background.png").convert()
+            if len(objekti) == 0:
+                novi_novcic = Novcic()
+                objekti.add(novi_novcic)
 
-        if score>=10:
-            if len(objekti) == 1:
+        if broj_levela>=2:
+            background= pygame.image.load("Slike/Levels/Level 2/background.png").convert()
+            if score>=5:
+                if len(objekti) == 1:
+                    for objekt in objekti.sprites():
+                        if objekt.novcic_rect.bottom > 300:
+                            novi_novcic = Novcic()
+                            objekti.add(novi_novcic)
+
+        if broj_levela>=3:
+            background= pygame.image.load("Slike/Levels/Level 3/background.png").convert()
+            if score>=10:
                 for objekt in objekti.sprites():
-                    if objekt.novcic_rect.bottom > 300:
-                        novi_novcic = Novcic()
-                        objekti.add(novi_novcic)
+                    objekt.brzina_dropa=1.2
+
+        if broj_levela>=4:
+            background= pygame.image.load("Slike/Levels/Level 4/background.png").convert()
+            if score>=15:
+                if len(objekti) == 2:
+                    for objekt in objekti.sprites():
+                        if objekt.novcic_rect.bottom > 550:
+                            novi_novcic = Novcic()
+                            objekti.add(novi_novcic)
+        
+        if broj_levela>=5:
+            background= pygame.image.load("Slike/Levels/Level 5/background.png").convert()
+            if score>=20:
+                for objekt in objekti.sprites():
+                    objekt.brzina_dropa=1.4
+
+        if broj_levela>=6:
+            background= pygame.image.load("Slike/Levels/Level 6/background.png").convert()
+            if score>=25:
+                if len(objekti) == 3:
+                    for objekt in objekti.sprites():
+                        if objekt.novcic_rect.bottom > 450:
+                            novi_novcic = Novcic()
+                            objekti.add(novi_novcic)
+
+        if broj_levela>=7:
+            background= pygame.image.load("Slike/Levels/Level 7/background.png").convert()
+            if score>=30:
+                for objekt in objekti.sprites():
+                    objekt.brzina_dropa=1.8
+
+
 
     def specials_drop():
         if len(specials) == 0:
@@ -945,7 +1007,7 @@ def level(brojLevela):
             elif rendom == 4:
                 special=Novcic()
                 specials.add(special)
-                special.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/smanjenjespecial.png"), (30, 30)).convert_alpha()
+                special.novcic_slika=pygame.transform.scale(pygame.image.load("SlikeLevels/smanjenjespecial.png"), (30, 30)).convert_alpha()
                 special.specialbroj=4
 
 
@@ -955,11 +1017,9 @@ def level(brojLevela):
                 special.novcic_slika=pygame.transform.scale(pygame.image.load("Slike/Levels/speedspecial.png"), (30, 30)).convert_alpha()
                 special.specialbroj=5
 
-            
-
 
     def postotak():
-        return ((score/ukupno)*100)
+        return(f"{(score/ukupno)*100}%")
 
     while True:
         PAUSE_BACK = Gumb(pygame.transform.scale(pygame.image.load("Slike/Levels/Pauza_gumb.png").convert(), (40, 40)), (560, 40), "", test_font, "White", "Green")
@@ -967,6 +1027,7 @@ def level(brojLevela):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -978,12 +1039,28 @@ def level(brojLevela):
             level_pause(screen, score)
 
         if aktivnost_igrice:
+            if broj_levela == 1:
+                background = pygame.image.load("Slike/Levels/Level 1/backgorund.png").convert()
+                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\pirateskrilima.png"), (120,120)).convert_alpha()
+            elif broj_levela == 2:
+                background = pygame.image.load("Slike/Levels/Level 2/background.png").convert()
+            elif broj_levela == 3:
+                background = pygame.image.load("Slike/Levels/Level 3/background.png").convert()
+            elif broj_levela == 4:
+                background = pygame.image.load("Slike/Levels/Level 4/background.png").convert()
+            elif broj_levela == 5:
+                background = pygame.image.load("Slike/Levels/Level 5/background.png").convert()
+            elif broj_levela == 6:
+                background = pygame.image.load("Slike/Levels/Level 6/background.png").convert()
+            elif broj_levela == 7:
+                background = pygame.image.load("Slike/Levels/Level 7/background.png").convert()
+            
             screen.blit(background, (0,0))
 
             player.draw()
             player.update()
             
-            drop_novcici()
+            drop_novcici(broj_levela)
             for novcic in objekti.sprites():
                 novcic.draw()
                 novcic.update()
@@ -997,7 +1074,7 @@ def level(brojLevela):
                         objekti.remove(novcic)
 
             for objekt in objekti.sprites():
-                if objekt.novcic_rect.bottom > 660:
+                if objekt.novcic_rect.bottom > 700:
                     objekti.remove(objekt)
                     ukupno+=1
             
@@ -1018,12 +1095,14 @@ def level(brojLevela):
                         player.brzina=0
                         player.jump_height=0
                         player.gravity=0
+                        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/freezelikpirata.png"), (120, 120)).convert_alpha()
                     elif special.specialbroj == 3:
                         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (240, 240)).convert_alpha()
                     elif special.specialbroj == 4:
                         player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (90, 90)).convert_alpha()
                     elif special.specialbroj == 5:
                         player.brzina=3
+                        player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/speedlikpirata.png"), (120, 120)).convert_alpha()
 
                     pocetak=time.time()
                     pocetno_vrijeme=zavrsno_vrijeme
@@ -1047,12 +1126,13 @@ def level(brojLevela):
                 player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (120, 120)).convert_alpha()
                 pocetak=time.time()
             
+
             if ukupno>=50:
                 aktivnost_igrice=False
-                level_end(screen, brojLevela, postotak())
+                level_end(screen, broj_levela, postotak())
 
         pygame.display.update()
-
+    
 
 def endless():
     pygame.init()
@@ -1065,7 +1145,7 @@ def endless():
     aktivnost_igrice=True
     score=0
     lives=3
-    high_score = 0
+    global high_score
             
 
     class Pirat():
@@ -1211,6 +1291,7 @@ def endless():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -1317,6 +1398,7 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -1328,48 +1410,15 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
                     click_sound.play()
                     achivment()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    ispis(podaci)
                     pygame.quit()
                     sys.exit()
 
         pygame.display.update()
 
 
-def play(): #Ovdje vi nadodajete svoj dio za sami aspekt igrice. Tu se odvija radnja
-    while True:
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        screen.fill("White") #Najvjerojatnije ću kasnije probati sa clear
-        map_surf = pygame.image.load("Slike/Menu/Mapa2.png").convert()
-        map_rect = map_surf.get_rect(topleft = (0, 70))
-        screen.blit(map_surf, map_rect)
-
-        play_tekst = test_font.render("MAPA SVIJETA", False, "Black")
-        play_rect = play_tekst.get_rect(center = (300,50))
-        screen.blit(play_tekst, play_rect)
-
-
-        LEVEL_1 = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(),(100, 200), "1.Level", test_font, "White", "Green")
-        LEVEL_1.update(screen)
-        LEVEL_2 = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(),(400, 200), "2.Level", test_font, "White", "Green")
-        LEVEL_2.update(screen)
-
-        PLAY_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb4.png").convert(),(300, 700), "Vrati se", test_font, "White", "Green")
-        
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-                if LEVEL_1.checkForInput(PLAY_MOUSE_POS):
-                    level_start(screen, 1, 1)
-                if LEVEL_2.checkForInput(PLAY_MOUSE_POS):
-                    level_start(screen, 2, 2)
-        pygame.display.update()
+def play():
+    map()
 
 
 def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objašnjenje za kontrole/radnju
@@ -1468,6 +1517,7 @@ def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objaš
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -1519,6 +1569,7 @@ def achivment():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                ispis(podaci)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -1526,5 +1577,53 @@ def achivment():
                     main_menu()
         pygame.display.update()
 
+
+def map():
+    while True:
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+
+        screen.fill("White")
+        map_surf = pygame.transform.scale(pygame.image.load("Slike/Menu/map 3.jpg").convert(), (600, 750))
+        map_rect = map_surf.get_rect(topleft = (0,0))
+        screen.blit(map_surf, map_rect)
+
+        LEVEL_1 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(),(148, 297), "", test_font, "White", "Green")
+        LEVEL_2 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (199, 430), "", test_font, "White", "Green")
+        LEVEL_3 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (273, 592), "", test_font, "White", "Green")
+        LEVEL_4 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (318, 311), "", test_font, "White", "Green")
+        LEVEL_5 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (279, 273), "", test_font, "White", "Green")
+        LEVEL_6 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (431, 289), "", test_font, "White", "Green")
+        LEVEL_7 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (508, 448), "", test_font, "White", "Green")
+
+        PLAY_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb4.png").convert(),(300, 700), "Vrati se", test_font, "White", "Green")
+        
+        for gumb in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7]:
+            gumb.changeColor(PLAY_MOUSE_POS)
+            gumb.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ispis(podaci)
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    main_menu()
+                if LEVEL_1.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 1, podaci[data][2][1])
+                if LEVEL_2.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 2, podaci[data][2][2])
+                if LEVEL_3.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 3, podaci[data][2][3])
+                if LEVEL_4.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 4, podaci[data][2][4])
+                if LEVEL_5.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 5, podaci[data][2][5])
+                if LEVEL_6.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 6, podaci[data][2][6])
+                if LEVEL_7.checkForInput(PLAY_MOUSE_POS):
+                    level_start(screen, 7, podaci[data][2][7])
+        pygame.display.update()
+    
 
 login()
