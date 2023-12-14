@@ -459,7 +459,6 @@ def level_options(scrn, score):
 
     
 def ispis(lista):
-    lista[1] = high_score
     with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
         datoteka.writelines(lista)
 
@@ -1041,8 +1040,8 @@ def level(broj_levela):
 
         if aktivnost_igrice:
             if broj_levela == 1:
-                background = pygame.image.load("Slike/Levels/Level 1/backgorund.png").convert()
-                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\pirateskrilima.png"), (120,120)).convert_alpha()
+                background = pygame.image.load("Slike/Levels/Level 1/background.png").convert()
+                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 1/pirateskrilima.png"), (120,120)).convert_alpha()
             elif broj_levela == 2:
                 background = pygame.image.load("Slike/Levels/Level 2/background.png").convert()
             elif broj_levela == 3:
