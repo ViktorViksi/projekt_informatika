@@ -83,7 +83,7 @@ def login():
                     if LOGIN_BACK.checkForInput(LOGIN_MOUSE_POS):
                         for i in range(len(podaci)):
                             if len(user_text) == 0:
-                                user_text = privremeno
+                                user_text = "privremeno"
                             elif user_text.upper() == podaci[i][0]:
                                 data = i
                                 high_score = int(podaci[data][1])
