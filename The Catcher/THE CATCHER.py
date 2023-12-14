@@ -1422,10 +1422,10 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
         menu_rect = menu_tekst.get_rect(center = (300, 100))
 
         #Gumb(image, pos, text_input, font, base_color, hovering_color)
-        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb.png").convert(), (300, 300), "PLAY", test_font,"Black", "White")
-        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,400),"OPTIONS", test_font, "Black", "White")
-        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(), (300,500),"ACHIVMENT", test_font, "Black", "White")
-        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 600), "QUIT", test_font, "Black", "White")
+        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb.png").convert(), (450, 300), "PLAY", test_font,"Black", "White")
+        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (450,400),"OPTIONS", test_font, "Black", "White")
+        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(), (450,500),"ACHIVMENT", test_font, "Black", "White")
+        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (450, 600), "QUIT", test_font, "Black", "White")
 
         screen.blit(menu_tekst,menu_rect)
 
