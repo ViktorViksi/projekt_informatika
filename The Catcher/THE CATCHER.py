@@ -22,7 +22,7 @@ zvuk2 = 0.5
 bg_music = pygame.mixer.Sound("Audio/He's a Pirate.mp3")
 bg_music.set_volume(zvuk)
 bg_music.play(loops= -1)
-click_sound  = pygame.mixer.Sound("Audio/Bonk Sound Effect.mp3")
+click_sound  = pygame.mixer.Sound("Audio/Click_sound.mp3")
 click_sound.set_volume(zvuk2)
 stisnut = 0
 stisnut2 = 0
@@ -179,7 +179,7 @@ class Scroll():
 
 
     def changeButtonPosition(self,position, screen, zvuk):
-        self.jump_sound  = pygame.mixer.Sound("Audio/Bonk Sound Effect.mp3")
+        self.jump_sound  = pygame.mixer.Sound("Audio/Click_sound.mp3")
         self.jump_sound.set_volume(0.5)
         self.x_pos_button = int(position[0])
         self.rect_button = self.image_button.get_rect(center = (self.x_pos_button, self.y_pos_button))
@@ -242,7 +242,7 @@ def pause_options(scrn, score):
         pygame.draw.rect(screen, "Brown", zvuk2_rect,2)
         screen.blit(zvuk2_tekst, zvuk2_rect)
 
-        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb5.png").convert(), (100, 700), "Vrati se", test_font, "White", "Green")
+        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (100, 700), "Vrati se", test_font, "White", "Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(screen)
@@ -383,7 +383,7 @@ def level_options(scrn, score):
         pygame.draw.rect(screen, "Brown", zvuk2_rect,2)
         screen.blit(zvuk2_tekst, zvuk2_rect)
 
-        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb5.png").convert(), (100, 700), "Vrati se", test_font, "White", "Green")
+        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (100, 700), "Vrati se", test_font, "White", "Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(screen)
@@ -505,9 +505,9 @@ def pause_menu(scrn, score):
         score_tekst = test_font.render(f"Current Score: {score}",True, "Black")
         score_rect = pause_tekst.get_rect(center = (285, 200))
         
-        NASTAVI = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,400),"NASTAVI", test_font, "Black", "White")
-        OPTIONS = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(), (300,500),"OPTIONS", test_font, "Black", "White")
-        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 600), "MENU", test_font, "Black", "White")
+        NASTAVI = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,400),"NASTAVI", test_font, "Black", "White")
+        OPTIONS = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,500),"OPTIONS", test_font, "Black", "White")
+        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 600), "MENU", test_font, "Black", "White")
         PAUSE_BACK = Gumb(pygame.transform.scale(pygame.image.load("Slike/Menu/Pauza_gumb.png").convert(), (40, 40)), (560, 40), "", test_font, "White", "Green")
 
         scrn.blit(pause_tekst,pause_rect)
@@ -563,9 +563,9 @@ def level_pause(scrn, score):
         score_tekst = test_font.render(f"Current Score: {score}",True, "Black")
         score_rect = pause_tekst.get_rect(center = (285, 200))
         
-        NASTAVI = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,400),"NASTAVI", test_font, "Black", "White")
-        OPTIONS = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(), (300,500),"OPTIONS", test_font, "Black", "White")
-        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 600), "MENU", test_font, "Black", "White")
+        NASTAVI = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,400),"NASTAVI", test_font, "Black", "White")
+        OPTIONS = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,500),"OPTIONS", test_font, "Black", "White")
+        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 600), "MENU", test_font, "Black", "White")
         PAUSE_BACK = Gumb(pygame.transform.scale(pygame.image.load("Slike/Menu/Pauza_gumb.png").convert(), (40, 40)), (560, 40), "", test_font, "White", "Green")
 
         scrn.blit(pause_tekst,pause_rect)
@@ -619,8 +619,8 @@ def game_over(scrn, score, hscore):
         hscore_tekst = test_font.render(f"High Score: {hscore}",True, "Black")
         hscore_rect = hscore_tekst.get_rect(center = (300, 300))
         
-        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,500),"PONOVO", test_font, "Black", "White")
-        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 600), "MENU", test_font, "Black", "White")
+        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,500),"PONOVO", test_font, "Black", "White")
+        MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 600), "MENU", test_font, "Black", "White")
         PAUSE_BACK = Gumb(pygame.transform.scale(pygame.image.load("Slike/Menu/Pauza_gumb.png").convert(), (40, 40)), (560, 40), "", test_font, "White", "Green")
 
         scrn.blit(pause_tekst,pause_rect)
@@ -688,7 +688,7 @@ def level_start(scrn, brojLevela, type):
             msg_tekst = test_font.render(f"Level je zaključan",True, "Black")
             msg_rect = msg_tekst.get_rect(center = (300, 200))
             
-            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 550), "NATRAG", test_font, "Black", "White")
+            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 550), "NATRAG", test_font, "Black", "White")
 
             scrn.blit(intro_tekst,intro_rect)
             scrn.blit(msg_tekst, msg_rect)
@@ -719,8 +719,8 @@ def level_start(scrn, brojLevela, type):
             intro_tekst = test_font.render(tekst,True, "Black")
             intro_rect = intro_tekst.get_rect(center = (300, 100))
             
-            IGRAJ = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,450),"IGRAJ", test_font, "Black", "White")
-            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 550), "NATRAG", test_font, "Black", "White")
+            IGRAJ = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,450),"IGRAJ", test_font, "Black", "White")
+            NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 550), "NATRAG", test_font, "Black", "White")
 
             scrn.blit(intro_tekst,intro_rect)
             
@@ -780,8 +780,8 @@ def level_end(scrn, brojLevela, type):
         intro_tekst = test_font.render("LEVEL ZAVRŠEN",True, "Black")
         intro_rect = intro_tekst.get_rect(center = (300, 100))
             
-        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,450),"PONOVO", test_font, "Black", "White")
-        NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 550), "NATRAG", test_font, "Black", "White")
+        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300,450),"PONOVO", test_font, "Black", "White")
+        NATRAG = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 550), "NATRAG", test_font, "Black", "White")
 
         scrn.blit(intro_tekst,intro_rect)
         
@@ -1396,10 +1396,10 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
         menu_rect = menu_tekst.get_rect(center = (300, 100))
 
         #Gumb(image, pos, text_input, font, base_color, hovering_color)
-        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb.png").convert(), (450, 300), "PLAY", test_font,"Black", "White")
-        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (450,400),"OPTIONS", test_font, "Black", "White")
-        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb3.png").convert(), (450,500),"ACHIVMENT", test_font, "Black", "White")
-        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (450, 600), "QUIT", test_font, "Black", "White")
+        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 300), "PLAY", test_font,"Black", "White")
+        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,400),"OPTIONS", test_font, "Black", "White")
+        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,500),"ACHIVMENT", test_font, "Black", "White")
+        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 600), "QUIT", test_font, "Black", "White")
 
         screen.blit(menu_tekst,menu_rect)
 
@@ -1416,8 +1416,10 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    click_sound.play()
                     play()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    click_sound.play()
                     options()
                 if ACHIVMENT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     click_sound.play()
@@ -1446,7 +1448,7 @@ def biranje():
         ENDLESS= Gumb(pygame.image.load("Slike/Menu/Endless_slika.png").convert(),(300, 500), "", test_font, "White", "Green")
         ENDLESS.update(screen)
 
-        BIRANJE_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb4.png").convert(),(300, 700), "Vrati se", test_font, "White", "Green")
+        BIRANJE_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"),(300, 700), "Vrati se", test_font, "White", "Green")
         
         BIRANJE_BACK.changeColor(BIRANJE_MOUSE_POS)
         BIRANJE_BACK.update(screen)
@@ -1457,10 +1459,13 @@ def biranje():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if BIRANJE_BACK.checkForInput(BIRANJE_MOUSE_POS):
+                    click_sound.play()
                     main_menu()
                 if CAMPAIGN.checkForInput(BIRANJE_MOUSE_POS):
+                    click_sound.play()
                     map()
                 if ENDLESS.checkForInput(BIRANJE_MOUSE_POS):
+                    click_sound.play()
                     endless()
         pygame.display.update()
 
@@ -1507,7 +1512,7 @@ def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objaš
         pygame.draw.rect(screen, "Brown", zvuk2_rect,2)
         screen.blit(zvuk2_tekst, zvuk2_rect)
 
-        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb5.png").convert(), (100, 700), "Vrati se", test_font, "White", "Green")
+        OPTIONS_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (100, 700), "Vrati se", test_font, "White", "Green")
 
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(screen)
@@ -1652,7 +1657,7 @@ def achivment():
         opcije_rect = opcije_tekst.get_rect(center = (300, 60 ))
         screen.blit(opcije_tekst, opcije_rect)
         
-        ACHIVMENT_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300, 700),"Vrati se", test_font, "White", "Green")
+        ACHIVMENT_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 700),"Vrati se", test_font, "White", "Green")
 
         ACHIVMENT_BACK.changeColor(ACHIVMENT_MOUSE_POS)
         ACHIVMENT_BACK.update(screen)
@@ -1681,8 +1686,10 @@ def achivment():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if ACHIVMENT_BACK.checkForInput(ACHIVMENT_MOUSE_POS):
+                    click_sound.play()
                     main_menu()
                 if ACHIVMENT_RIGHT.checkForInput(ACHIVMENT_MOUSE_POS):
+                    click_sound.play()
                     achivment2()
         pygame.display.update()
 
@@ -1756,7 +1763,7 @@ def achivment2():
         opcije_rect = opcije_tekst.get_rect(center = (300, 60 ))
         screen.blit(opcije_tekst, opcije_rect)
         
-        ACHIVMENT_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300, 700),"Vrati se", test_font, "White", "Green")
+        ACHIVMENT_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (300, 700),"Vrati se", test_font, "White", "Green")
 
         ACHIVMENT_BACK.changeColor(ACHIVMENT_MOUSE_POS)
         ACHIVMENT_BACK.update(screen)
@@ -1785,8 +1792,10 @@ def achivment2():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if ACHIVMENT_BACK.checkForInput(ACHIVMENT_MOUSE_POS):
+                    click_sound.play()
                     main_menu()
                 if ACHIVMENT_RIGHT.checkForInput(ACHIVMENT_MOUSE_POS):
+                    click_sound.play()
                     achivment()
         pygame.display.update()
 
@@ -1837,7 +1846,7 @@ def map():
         LEVEL_6 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (431, 289), "", test_font, "White", "Green")
         LEVEL_7 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (508, 448), "", test_font, "White", "Green")
 
-        PLAY_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb4.png").convert(),(300, 700), "Vrati se", test_font, "White", "Green")
+        PLAY_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"),(300, 700), "Vrati se", test_font, "White", "Green")
         
         for gumb in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, PLAY_BACK]:
             gumb.changeColor(PLAY_MOUSE_POS)
@@ -1850,6 +1859,7 @@ def map():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    click_sound.play()
                     main_menu()
                 if LEVEL_1.checkForInput(PLAY_MOUSE_POS):
                     level_start(screen, 1, podaci[data][2][1])
