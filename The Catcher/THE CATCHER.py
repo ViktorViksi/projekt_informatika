@@ -35,14 +35,13 @@ achivment_sve3zvez = 0
 achivment_high_score = 0
 
 
-podaci = []
 with open("login_podaci.txt", encoding="utf-8") as datoteka:
     podaci = datoteka.readlines()
     for i in range(len(podaci)):
         podaci[i] = podaci[i].split(" ")
-        podaci[i][2] = podaci[i][2].split("")
+        podaci[i][2] = podaci[i][2].strip().split("_")
+        podaci[i][3] = podaci[i][3].strip().split("_")
 
-print(podaci)
 
 def login():
     user_text = ""
@@ -57,7 +56,7 @@ def login():
     color = color_passive
 
     active = False
-
+    
     while True:
 
         for event in pygame.event.get():
@@ -84,14 +83,17 @@ def login():
                         for i in range(len(podaci)):
                             if len(user_text) == 0:
                                 user_text = "privremeno"
-                            elif user_text.upper() == podaci[i][0]:
+                            if user_text.upper() == podaci[i][0]:
                                 data = i
                                 high_score = int(podaci[data][1])
+                                vrati_achivment(int(podaci[data][3][0]), int(podaci[data][3][1]), int(podaci[data][3][2]), int(podaci[data][3][3]), int(podaci[data][3][4]), int(podaci[data][3][5]),)
+
                                 main_menu()
-                        podaci.append([user_text.upper(), "0", "00llllll"]) #ovo ce bit nacin zapisivanja podataka al nije gotov
-                        data = len(podaci)-1
-                        high_score = int(podaci[data][1])
-                        main_menu()
+                            else:
+                                podaci.append([user_text.upper(), "0", ["0", "0", "l", "l", "l", "l", "l", "l",], ["0", "0", "0", "0", "0", "0"], "\n"])
+                                data = len(podaci)-1
+                                high_score = int(podaci[data][1])
+                                main_menu()
                         
 
 
@@ -470,13 +472,14 @@ def level_options(scrn, score):
 
     
 def ispis(lista):
-    if lista[data] != "PRIVREMENO":
+    if lista[data][0] != "PRIVREMENO":
         lista[data][1] = str(high_score)
         for i in range(len(lista)):
-            string1 = "".join(lista[i][2])
+            string1 = "_".join(lista[i][2])
             lista[i][2] = string1
-            string2 = " ".join(lista[i])
-            lista[i] = string2
+            string2 = "_".join(lista[i][3])
+            lista[i][3] = string2
+            lista[i] = " ".join(lista[i])
 
         with open("login_podaci.txt", "wt" ,encoding="utf-8") as datoteka:
             datoteka.writelines(lista)
@@ -613,10 +616,10 @@ def game_over(scrn, score, hscore):
         score_tekst = test_font.render(f"Current Score: {score}",True, "Black")
         score_rect = score_tekst.get_rect(center = (300, 200))
         
-        hscore_tekst = test_font.render(f"Current Score: {hscore}",True, "Black")
+        hscore_tekst = test_font.render(f"High Score: {hscore}",True, "Black")
         hscore_rect = hscore_tekst.get_rect(center = (300, 300))
         
-        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,500),"IGRAJ PONOVO", test_font, "Black", "White")
+        PONOVO = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb2.png").convert(), (300,500),"PONOVO", test_font, "Black", "White")
         MENU = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb6.png").convert(), (300, 600), "MENU", test_font, "Black", "White")
         PAUSE_BACK = Gumb(pygame.transform.scale(pygame.image.load("Slike/Menu/Pauza_gumb.png").convert(), (40, 40)), (560, 40), "", test_font, "White", "Green")
 
@@ -875,7 +878,6 @@ def level(broj_levela):
                 self.kretanje_desno = True
             if keys[pygame.K_LEFT]:
                 self.kretanje_lijevo = True
-            # if event.type == pygame.KEYDOWN: 
             if keys[pygame.K_SPACE]:
                 self.jump = True
                 self.skok += 1
@@ -1309,7 +1311,7 @@ def endless():
     class Srce(pygame.sprite.Sprite):
         def __init__(self, x):
             super().__init__()
-            self.srce_slika = pygame.transform.scale(pygame.image.load("Slike/Endless/srce.png").convert(), (40, 40))
+            self.srce_slika = pygame.transform.scale(pygame.image.load("Slike/Endless/srce.png").convert_alpha(), (40, 40))
             self.novcic_rect = self.srce_slika.get_rect(center=(10+(x*50),40))
 
         def draw(self):
@@ -1381,34 +1383,6 @@ def endless():
                             aktivnost_igrice=True
         
         pygame.display.update()
-
-
-
-
-        
-
-
-    def update(self,screen):
-        #self.image_line = pygame.transform.rotozoom(self.image_line,0,2)
-        screen.blit(self.image_line, self.rect_line)
-        #screen.blit(self.image_button, self.rect_button)
-
-    def checkForInput1(self,position):
-        if position[0] in range(self.rect_line.left +10, self.rect_line.right-9) and position[1] in range(self.rect_line.top, self.rect_line.bottom):
-            return True
-        return False
-
-
-    def changeButtonPosition(self,position, screen, zvuk):
-        self.jump_sound  = pygame.mixer.Sound("Audio/Bonk Sound Effect.mp3")
-        self.jump_sound.set_volume(0.5)
-        self.x_pos_button = int(position[0])
-        self.rect_button = self.image_button.get_rect(center = (self.x_pos_button, self.y_pos_button))
-        screen.blit(self.image_button, self.rect_button)
-        if pygame.mouse.get_pressed()[0]:
-            print(position)
-            #self.jump_sound.play()
-            return True
 
 
 def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaciju i uskladiti dizajn s njom.
@@ -1489,7 +1463,6 @@ def biranje():
                 if ENDLESS.checkForInput(BIRANJE_MOUSE_POS):
                     endless()
         pygame.display.update()
-
 
 
 def options(): #Moram nadodati za smanjivanje muzike i zvukova + možda i objašnjenje za kontrole/radnju
@@ -1817,6 +1790,7 @@ def achivment2():
                     achivment()
         pygame.display.update()
 
+
 def vrati_achivment(skok, gubitak, Pigra, Tzvez, SveTzvez, high): #omogućuje da se postigne achivment. Radi tako da se na stavi potrebna mjesta (npr. funkicju za skokove) i onda ona to ovdje vraća i mijenja achivmente u točne
     global achivment_skok
     global achivment_gubitak
@@ -1825,19 +1799,25 @@ def vrati_achivment(skok, gubitak, Pigra, Tzvez, SveTzvez, high): #omogućuje da
     global achivment_sve3zvez
     global achivment_high_score
     global high_score
+    global podaci
     if skok == 1:
         achivment_skok = 1
+        podaci[data][3][0] = "1"
     if gubitak == 1:
         achivment_gubitak = 1
+        podaci[data][3][1] = "1"
     if Pigra == 1:
         achivment_1pobjeda = 1
+        podaci[data][3][2] = "1"
     if Tzvez == 1:
         achivment_3zvez = 1
+        podaci[data][3][3] = "1"
     if SveTzvez == 1:
         achivment_sve3zvez = 1
+        podaci[data][3][4] = "1"
     if high == 1:
         achivment_high_score = 1
-
+        podaci[data][3][5] = "1"
 
 
 def map():
@@ -1849,17 +1829,17 @@ def map():
         map_rect = map_surf.get_rect(topleft = (0,0))
         screen.blit(map_surf, map_rect)
 
-        LEVEL_1 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(),(148, 297), "", test_font, "White", "Green")
-        LEVEL_2 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (199, 430), "", test_font, "White", "Green")
-        LEVEL_3 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (273, 592), "", test_font, "White", "Green")
-        LEVEL_4 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (318, 311), "", test_font, "White", "Green")
-        LEVEL_5 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (279, 273), "", test_font, "White", "Green")
-        LEVEL_6 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (431, 289), "", test_font, "White", "Green")
-        LEVEL_7 = Gumb(pygame.image.load("Slike/Menu/x.png").convert(), (508, 448), "", test_font, "White", "Green")
+        LEVEL_1 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(),(148, 297), "", test_font, "White", "Green")
+        LEVEL_2 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (199, 430), "", test_font, "White", "Green")
+        LEVEL_3 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (273, 592), "", test_font, "White", "Green")
+        LEVEL_4 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (318, 311), "", test_font, "White", "Green")
+        LEVEL_5 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (279, 273), "", test_font, "White", "Green")
+        LEVEL_6 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (431, 289), "", test_font, "White", "Green")
+        LEVEL_7 = Gumb(pygame.image.load("Slike/Menu/x.png").convert_alpha(), (508, 448), "", test_font, "White", "Green")
 
         PLAY_BACK = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb4.png").convert(),(300, 700), "Vrati se", test_font, "White", "Green")
         
-        for gumb in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7]:
+        for gumb in [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, PLAY_BACK]:
             gumb.changeColor(PLAY_MOUSE_POS)
             gumb.update(screen)
 
@@ -1889,3 +1869,5 @@ def map():
     
 
 login()
+
+
