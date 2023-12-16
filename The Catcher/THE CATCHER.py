@@ -33,14 +33,16 @@ achivment_1pobjeda = 0
 achivment_3zvez = 0
 achivment_sve3zvez = 0
 achivment_high_score = 0
+ukupno=0
 
 
 with open("login_podaci.txt", encoding="utf-8") as datoteka:
     podaci = datoteka.readlines()
+    print(podaci)
     for i in range(len(podaci)):
         podaci[i] = podaci[i].split(" ")
-        podaci[i][2] = podaci[i][2].strip().split("_")
-        podaci[i][3] = podaci[i][3].strip().split("_")
+        podaci[i][2] = podaci[i][2].split("_")
+        podaci[i][3] = podaci[i][3].split("_")
 
 
 def login():
@@ -845,12 +847,30 @@ def level_end(scrn, brojLevela, type):
             pygame.display.update()
 
 
+def bg(broj_levela):
+    if broj_levela == 1:
+        return pygame.image.load("Slike/Levels/Level 1/background.png")
+    elif broj_levela == 2:
+        return pygame.image.load("Slike/Levels/Level 2/background.png")
+    elif broj_levela == 3:
+        return pygame.image.load("Slike/Levels/Level 3/background.png")
+    elif broj_levela == 4:
+        return pygame.image.load("Slike/Levels/Level 4/background.png")
+    elif broj_levela == 5:
+        return pygame.image.load("Slike/Levels/Level 5/background.png")
+    elif broj_levela == 6:
+        return pygame.image.load("Slike/Levels/Level 6/background.png")
+    elif broj_levela == 7:
+        return pygame.image.load("Slike/Levels/Level 7/background.png")
+
+
 def level(broj_levela):
+    global ukupno
     pygame.init()
     pygame.display.set_caption("TheCatcher: Worldwide Thievery Thrust")
     
     screen=pygame.display.set_mode((600,750))
-    background=pygame.image.load("Slike\\Levels\\Level 1\\background.png").convert()
+    background=bg(broj_levela)
 
 
     aktivnost_igrice=True
@@ -859,7 +879,7 @@ def level(broj_levela):
 
     class Pirat():
         def __init__(self):
-            self.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/Level 1\\pirateskrilima.png"), (110, 180)).convert_alpha()
+            self.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (110, 180)).convert_alpha()
             self.pirat_rect=self.pirat_image.get_rect(midbottom= (300, 700))
             
 
@@ -946,20 +966,19 @@ def level(broj_levela):
 
 
 
-
     def sudar_sprite(novcic_rect):
         if player.pirat_rect.colliderect(novcic_rect):
             return True
         else: 
             return False
 
-    def drop_novcici(broj_levela):
+    def drop_novcici():
         global ukupno
         if len(objekti) == 0:
             novi_novcic = Novcic()
             objekti.add(novi_novcic)
 
-        if ukupno>=80:
+        if ukupno >=80:
             if len(objekti) == 1:
                 for objekt in objekti.sprites():
                     if objekt.novcic_rect.bottom > 300:
@@ -1027,9 +1046,9 @@ def level(broj_levela):
                 player.gravity=0
                 player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\freezelikpirata.png"), (110, 180)).convert_alpha()
             elif special.specialbroj == 3:
-                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\pirateskrilima.png"), (220, 360)).convert_alpha()
+                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\likpirata.png"), (220, 360)).convert_alpha()
             elif special.specialbroj == 4:
-                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\pirateskrilima.png"), (55, 90)).convert_alpha()
+                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\likpirata.png"), (55, 90)).convert_alpha()
             elif special.specialbroj == 5:
                 player.brzina=3
                 player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\Levels\\speedlikpirata.png"), (110, 180)).convert_alpha
@@ -1108,13 +1127,13 @@ def level(broj_levela):
                 player.brzina=1
                 player.jump_height=15
                 player.gravity=5
-                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike\\pirateskrilima.png"), (110, 180)).convert_alpha()
+                player.pirat_image=pygame.transform.scale(pygame.image.load("Slike/Levels/likpirata.png"), (110, 180)).convert_alpha()
                 pocetak=time.time()
         
 
             if ukupno>=100:
                 aktivnost_igrice=False
-                print(postotak())
+                level_end(screen, broj_levela, postotak())
 
         pygame.display.update()
     
