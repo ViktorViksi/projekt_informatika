@@ -940,7 +940,7 @@ def level(broj_levela):
             
             self.novcic_rect=self.novcic_slika.get_rect(midtop= (randint(150, 450), -50))
 
-            self.brzina_dropa=30
+            self.brzina_dropa=5
 
             self.specialbroj=0
 
@@ -1148,7 +1148,7 @@ def endless():
 
     aktivnost_igrice=True
     score=0
-    lives=3
+    lives = 3
     global high_score
             
 
@@ -1281,10 +1281,10 @@ def endless():
         def __init__(self, x):
             super().__init__()
             self.srce_slika = pygame.transform.scale(pygame.image.load("Slike/Endless/srce.png").convert_alpha(), (40, 40))
-            self.novcic_rect = self.srce_slika.get_rect(center=(10+(x*50),40))
+            self.srce_rect = self.srce_slika.get_rect(center=(10+(x*50),40))
 
         def draw(self):
-            screen.blit(self.srce_slika, self.novcic_rect)
+            screen.blit(self.srce_slika, self.srce_rect)
             
         
     srca = pygame.sprite.Group()
@@ -1314,6 +1314,8 @@ def endless():
         if aktivnost_igrice:
             screen.blit(background, (0,0))
 
+            print(lives)
+            
             player.draw()
             player.update()
 
@@ -1335,12 +1337,13 @@ def endless():
                     objekti.remove(novcic)
                 else:
                     if novcic.novcic_rect.bottom > 660:
-                        lives-=1
+                        objekti.remove(novcic)
+                        lives -= 1
                         if lives == 2:
                             srca.remove(srce3)
                         elif lives == 1:
                             srca.remove(srce2)
-                        if lives==0:
+                        elif lives==0:
                             srca.remove(srce1)
                             aktivnost_igrice=False
                             if score > high_score:
