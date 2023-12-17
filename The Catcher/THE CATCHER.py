@@ -890,6 +890,7 @@ def level(broj_levela):
             self.brzina= 1
             self.gravity= 5
             self.jump_height= 15
+            self.skok = 0
             
 
 
@@ -902,7 +903,8 @@ def level(broj_levela):
             if keys[pygame.K_SPACE]:
                 self.jump = True
                 self.skok += 1
-                if self.skok >= 10:
+                print(self.skok)
+                if self.skok >= 2500:
                     vrati_achivment(1,0,0,0,0,0)
         
         def kretanje_ekran(self):
@@ -1348,7 +1350,7 @@ def endless():
                             aktivnost_igrice=False
                             if score > high_score:
                                 high_score = score
-                            if high_score >= 100:
+                            if high_score >= 200:
                                 vrati_achivment(0,0,0,0,0,1)
                             game_over(screen, score, high_score)
                         else:
@@ -1584,8 +1586,6 @@ def achivment():
         achivment_tekst = achivment_font.render( "Skoči izrazito puno puta" ,False, "White")
         achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 510 ))
 
-        achivment_tekst3 = achivment_font.render( "Skoči izrazito puno puta" ,False, "White")
-        achivment_tekst_rect3 = achivment_tekst3.get_rect(center = (350, 510 ))
         
 
         achivment_surface = pygame.image.load("Slike/Menu/Background_achivment.png").convert()
@@ -1601,6 +1601,10 @@ def achivment():
         screen.blit(achivment_table_locked, achivment_table_rect_locked)
 
 
+        #emoji
+        achivment_emoji = pygame.image.load("Slike/Menu/Jump_emoji.png")
+        achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 210))
+
 
         if achivment_1pobjeda == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 220))
@@ -1608,6 +1612,9 @@ def achivment():
             achivment_tekst =achivment_font.render( "Odigraj prvu igru" ,False, "Black")
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 210 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
+            achivment_emoji = pygame.image.load("Slike/Menu/likpirata_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 210))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
         if achivment_gubitak == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 370))
             screen.blit(achivment_table, achivment_table_rect)
@@ -1615,6 +1622,9 @@ def achivment():
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 360 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
             screen.blit(achivment_tekst, (achivment_tekst_rect.x , achivment_tekst_rect.y))
+            achivment_emoji = pygame.image.load("Slike/Menu/Game_over_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 360))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
         if achivment_skok == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 520))
             screen.blit(achivment_table, achivment_table_rect)
@@ -1622,7 +1632,9 @@ def achivment():
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 510 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
             screen.blit(achivment_tekst, (achivment_tekst_rect.x , achivment_tekst_rect.y))
-        
+            achivment_emoji = pygame.image.load("Slike/Menu/Jump_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 510))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
 
         
         opcije_tekst = naslov_font.render("Postignuća" ,False, "White")
@@ -1689,8 +1701,6 @@ def achivment2():
         achivment_tekst = achivment_font.render( "Skoči izrazito puno puta" ,False, "White")
         achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 510 ))
 
-        achivment_tekst3 = achivment_font.render( "Skoči izrazito puno puta" ,False, "White")
-        achivment_tekst_rect3 = achivment_tekst3.get_rect(center = (350, 510 ))
         
 
         achivment_surface = pygame.image.load("Slike/Menu/Background_achivment.png").convert()
@@ -1705,7 +1715,9 @@ def achivment2():
         achivment_table_rect_locked = achivment_table_locked.get_rect(midleft = (10, 220))
         screen.blit(achivment_table_locked, achivment_table_rect_locked)
 
-
+        #emoji
+        achivment_emoji = pygame.image.load("Slike/Menu/Jump_emoji.png")
+        achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 210))
 
         if achivment_3zvez == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 220))
@@ -1713,20 +1725,29 @@ def achivment2():
             achivment_tekst =achivment_font.render( "Pobijedi s 3 zvijezde" ,False, "Black")
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 210 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
+            achivment_emoji = pygame.image.load("Slike/Menu/Star_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 210))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
         if achivment_sve3zvez == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 370))
             screen.blit(achivment_table, achivment_table_rect)
-            achivment_tekst =achivment_font.render( "Sve pobijedi s 3 zvijezde" ,False, "Black")
+            achivment_tekst =achivment_font.render( "Svi leveli s 3 zvijezde" ,False, "Black")
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 360 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
             screen.blit(achivment_tekst, (achivment_tekst_rect.x , achivment_tekst_rect.y))
+            achivment_emoji = pygame.image.load("Slike/Menu/Star_3_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 360))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
         if achivment_high_score == 1:
             achivment_table_rect = achivment_table.get_rect(midleft = (10, 520))
             screen.blit(achivment_table, achivment_table_rect)
-            achivment_tekst =achivment_font.render( "Postigni novi high score" ,False, "Black")
+            achivment_tekst =achivment_font.render( "Legendarni high score" ,False, "Black")
             achivment_tekst_rect = achivment_tekst.get_rect(center = (350, 510 ))
             screen.blit(achivment_tekst, achivment_tekst_rect)
             screen.blit(achivment_tekst, (achivment_tekst_rect.x , achivment_tekst_rect.y))
+            achivment_emoji = pygame.image.load("Slike/Menu/High_score_emoji.png")
+            achivment_emoji_rect = achivment_emoji.get_rect(midleft = (45, 510))
+            screen.blit(achivment_emoji, achivment_emoji_rect)
 
         
 
