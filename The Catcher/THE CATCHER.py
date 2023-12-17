@@ -1369,10 +1369,10 @@ def main_menu(): #Iz ovoga dalje biramo druge "prozore". Moram napraviti animaci
         menu_rect = menu_tekst.get_rect(center = (300, 100))
 
         #Gumb(image, pos, text_input, font, base_color, hovering_color)
-        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 300), "PLAY", test_font,"Black", "White")
-        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,400),"OPTIONS", test_font, "Black", "White")
-        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,500),"ACHIVMENT", test_font, "Black", "White")
-        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 600), "QUIT", test_font, "Black", "White")
+        PLAY_BUTTON =  Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 300), "IGRAJ", test_font,"Black", "White")
+        OPTIONS_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,400),"OPCIJE", test_font, "Black", "White")
+        ACHIVMENT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450,500),"POSTIGNUĆA", achivment_font, "Black", "White")
+        QUIT_BUTTON = Gumb(pygame.image.load("Slike/Menu/Pozadina_gumb0.png"), (450, 600), "IZLAZ", test_font, "Black", "White")
 
         screen.blit(menu_tekst,menu_rect)
 
@@ -1871,5 +1871,3 @@ def map():
     
 
 login()
-
-
