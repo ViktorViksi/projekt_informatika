@@ -903,7 +903,6 @@ def level(broj_levela):
             if keys[pygame.K_SPACE]:
                 self.jump = True
                 self.skok += 1
-                print(self.skok)
                 if self.skok >= 2500:
                     vrati_achivment(1,0,0,0,0,0)
         
