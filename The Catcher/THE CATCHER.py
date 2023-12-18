@@ -946,7 +946,7 @@ def level(broj_levela):
             elif broj_levela==3:
                 self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\Levels\\Level 3\\novcic.png"), (40,40)).convert_alpha()
             elif broj_levela==4:
-                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\Levels\\Level4\\novcic.png"), (40,40)).convert_alpha()
+                self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\Levels\\Level 4\\novcic.png"), (40,40)).convert_alpha()
             elif broj_levela==5:
                 self.novcic_slika=pygame.transform.scale(pygame.image.load("Slike\\Levels\\Level 5\\novcic.png"), (50,50)).convert_alpha()
             elif broj_levela==6:
